@@ -76,11 +76,148 @@ Para el desarrollo de la aplicacion es importante que conoscas conceptos como:
 
 **Ports -> Puertos**: en el contexto de la comunicación de red, los puertos se refieren a canales lógicos dentro de una dirección IP. Cada puerto se asigna a un proceso o servicio específico, lo que permite que varios servicios se ejecuten simultáneamente en la misma dirección IP. En HTTP, el puerto predeterminado para comunicarse con un servidor web es 80 para HTTP y 443 para HTTPS.
 
-Para ver el ejemplo da [click aqui]
+Para ver el ejemplo da click -> [ejemplo backend]
 
-[click aqui]:backend
+[ejemplo backend]:backend
 
 
 ## Aplicacion cliente
+### Configuracion del framework de trabajo ReactJS
+Para configurar el entorno de trabajo en [react] usaremos la herramienta de construccion [vite].
+
+[react]:https://react.dev/
+```bash
+npm create vite@latest
+``` 
+* Escribimos el nombre del proyecto
+* seleccionamos **React**
+* seleccionamos **JavaScript**
+* iniciamos el proyecto
+```bash
+cd nombre_del_proyecto
+npm install
+npm run dev
+```
+
+[vite]:https://vitejs.dev/
+
+### Limpiamos el entorno
+* Eliminamos los archivos css
+* Eliminamos las importaciones a los archivos CSS que eliminamos
+* Eliminamos imagenes y sus importaciones
+
+Dejamos el archivo **App.jsx** de la siguiente manera
+```jsx
+function App() {
+  return (
+    <>
+    </>
+  )
+}
+
+export default App
+```
+### Trabajando en React
+ReactJS en un entorno de trabajo que funciona por medio de componentes. Para ser mas especifico, elementos como:
+* Navbar
+* Footer
+* Segmentos
+
+Trabajarlos por separado y una sola vez.
+
+Para trabajar en ReactJS te recomiendo los siguientes complementos:
+* [bootstrap]: para adquirir recursos facilmente.
+* [sweetalert2]: para realizar notificaciones personalizadas.
+* [colorhunt]: para facilitar la seleccion de colores del sitio.
+* [react-icons]: iconos a tu alcance y faciles de aplicar.
+
+[bootstrap]:https://getbootstrap.com/
+[sweetalert2]:https://sweetalert2.github.io/
+[colorhunt]:https://colorhunt.co/
+[react-icons]:https://react-icons.github.io/react-icons/
+
+Para ir al ejemplo da click -> [ejemplo frontend] 
+
+[ejemplo frontend]:frontend
 
 ## Base de datos
+Para la realizacion de la base de datos deben usar la imagen de mysql de Dockerhub -> [imagen mysql]
+
+[imagen mysql]:https://hub.docker.com/_/mysql
+
+## Docker
+### Instalación de Docker
+
+1. Actualizamos los programas y paquetes de ubuntu
+
+```bash
+sudo apt-get update
+sudo apt-get upgrade
+```
+
+2. Instalar dependencias
+```bash
+sudo apt-get install ca-certificates curl gnupg lsb-release
+```
+
+3. Instalar CURL (si no esta instalado)
+```bash
+sudo apt install curl
+```
+
+4. Añadir la clave GPG
+```bash
+sudo mkdir -m 0755 -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o
+/etc/apt/keyrings/docker.gpg
+```
+
+5. Configurar el entorno de Docker
+
+```bash
+echo \
+"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg]
+https://download.docker.com/linux/ubuntu \
+$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+
+6. Instalar Docker
+
+```bash
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-
+compose-plugin
+```
+
+7. Verificar la instalación
+```bash
+docker --version
+```
+
+8. Añadir el usuario al grupo de Docker
+```bash
+sudo usermod -aG docker $USER
+```
+
+9. Verificar que funcione
+```bash
+docker run hello-world
+```
+
+### Subir imagen de Docker a Dockerhub
+1. Escribir un dockerfile
+2. Contruir la imagen Docker
+
+```bash
+docker build -t nombre-usuario/nombre-imagen:tag
+```
+3. Iniciar sesion en Dockerhub
+```bash
+docker login
+```
+4. Subir la imagen a Dockerhub
+
+```bash
+docker push nombre-usuario/nombre-imagen:tag
+```
+5. Verificar la imagen en Dockerhub
