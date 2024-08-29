@@ -30,7 +30,7 @@ function Usuarios() {
     // Crear un nuevo usuario
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch('172.17.0.1:5000/usuarios', {
+        fetch('http://172.17.0.1:5000/usuarios', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
