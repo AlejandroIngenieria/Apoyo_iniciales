@@ -1,10 +1,17 @@
 import express from "express"
+import cors from "cors"
 
 const app = express()
 const port = 3000
 
 // Es para recibir json en las peticiones
 app.use(express.json())
+
+// Configura CORS para permitir solicitudes desde el origen de tu frontend
+app.use(cors({
+    origin: 'http://localhost:5173'
+}));
+
 
 // Para este ejemplo usaremos un array simulando la funcion de la base de datos
 let usuarios = []
@@ -21,7 +28,7 @@ let usuarios = []
 // req = request -> peticion
 // res = response -> respuesta
 //  POST = PUBLICAR
-app.post('/usuarios',(req, res) => {
+app.post('/usuarios', (req, res) => {
     // Guardamos la informacion en formato json que nos envia la aplicacion cliente
     const usuario = req.body
     // Creamos un id que incrementara segun el tamaño del array(total de elementos)
@@ -36,6 +43,7 @@ app.post('/usuarios',(req, res) => {
 /*                                    READ                                    */
 /* -------------------------------------------------------------------------- */
 // GET = OBTENER
+// OBTENER LA INFORMACION DE UN USUARIO EN ESPECIFICO
 app.get('/usuarios/:id', (req, res) => {
     // En la siguiente constante la parsearemos como entero ya que los parametros tomados de una url siempre son de tipo cadena o string.
     const id = parseInt(req.params.id)
@@ -43,7 +51,12 @@ app.get('/usuarios/:id', (req, res) => {
     const usuario = usuarios.find(user => user.id === id)
     // En la siguiente condicion si la variable usuario no esta vacia, se tomara como True y ejecutara la condicion, de lo contrario enviaremos el mensaje de que no se encontro al usuario.
     if (usuario) res.json(usuario)
-    else res.status(404).json({mensaje: 'Usuario no encontrado'})
+    else res.status(404).json({ mensaje: 'Usuario no encontrado' })
+})
+
+// OBTEMER TODOS LOS USUARIOS
+app.get('/usuarios', (req, res) => {
+    res.json(usuarios)
 })
 
 /* -------------------------------------------------------------------------- */
@@ -62,14 +75,14 @@ app.put('/usuarios/:id', (req, res) => {
     // con la sintaxis nombre_array[posicion] accederemos al elemento a editar
     // ...usuarios[index] -> desglosaremos todos los atributos del usuario
     // ...req.body -> modificaremos los atributos del usuario
-    usuarios[index] = {...usuarios[index], ...req.body}
-    res.status(204).send()
+    user = usuarios[index] = { ...usuarios[index], ...req.body }
+    res.json(user)
 })
 
 /* -------------------------------------------------------------------------- */
 /*                                   DELETE                                   */
 /* -------------------------------------------------------------------------- */
-app.delete('/usuarios/:id', (req,res) => {
+app.delete('/usuarios/:id', (req, res) => {
     // En la siguiente constante la parsearemos como entero ya que los parametros tomados de una url siempre son de tipo cadena o string.
     const id = parseInt(req.params.id)
     // Como nuestro objetivo es eliminar un usuario, asignaremos a nuestro array nuevamente todos sus elementos con excepcion del elemento que deseamos eliminar.
@@ -81,6 +94,6 @@ app.delete('/usuarios/:id', (req,res) => {
 
 
 // Iniciar el servidor
-app.listen(port, ()=>{
+app.listen(port, () => {
     console.log(`Se levanto el servidor en el puerto ${port}`)
 })
