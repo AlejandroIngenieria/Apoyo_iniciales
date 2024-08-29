@@ -12,7 +12,7 @@ function Usuarios() {
 
     // Obtener todos los usuarios
     useEffect(() => {
-        fetch('http://localhost:3000/usuarios')
+        fetch('http://172.17.0.1:5000/usuarios')
             .then(response => response.json())
             .then(data => setUsuarios(data))
             .catch(error => console.error('Error al obtener los usuarios:', error));
@@ -30,7 +30,7 @@ function Usuarios() {
     // Crear un nuevo usuario
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch('http://localhost:3000/usuarios', {
+        fetch('172.17.0.1:5000/usuarios', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ function Usuarios() {
 
     // Actualizar la información de un usuario
     const handleUpdate = () => {
-        fetch(`http://localhost:3000/usuarios/${editId}`, {
+        fetch(`http://172.17.0.1:5000/usuarios/${editId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ function Usuarios() {
 
     // Eliminar un usuario
     const handleDelete = (id) => {
-        fetch(`http://localhost:3000/usuarios/${id}`, {
+        fetch(`http://172.17.0.1:5000/usuarios/${id}`, {
             method: 'DELETE',
         })
             .then(() => {

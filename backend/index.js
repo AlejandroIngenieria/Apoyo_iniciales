@@ -2,14 +2,16 @@ import express from "express"
 import cors from "cors"
 
 const app = express()
-const port = 3000
+const port = 5000
 
 // Es para recibir json en las peticiones
-app.use(express.json())
+app.use(express.json({}))
 
 // Configura CORS para permitir solicitudes desde el origen de tu frontend
 app.use(cors({
-    origin: 'http://localhost:5173'
+    origin: '*',
+    methods: 'GET, POST, PUT, DELETE',
+    allowedHeaders: 'Content-Type, Authorization'
 }));
 
 

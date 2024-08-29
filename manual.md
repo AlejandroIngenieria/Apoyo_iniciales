@@ -6,10 +6,15 @@ Esta guia se estara trabajando en el sistema operativo Linux en su distribucion 
 ### CRUD de usuarios
 
 Al solicitar un CRUD de usuarios, se refiere a que incorporten la estructura basica en el manejo de datosm que equivaldria a:
+
 **C**: Create   ->  Crear
+
 **R**: Read     ->  Leer
+
 **U**: Update   ->  Actualizar
+
 **D**: Delete   ->  Borrar
+
 Para el desarrollo de la aplicacion del servidor se le dan las opciones de implementar el uso de NodeJS (JavaScript) o Flask (Python).
 
 ### Instalacion de NodeJS en ubuntu
