@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Form, Button, Table, Modal } from 'react-bootstrap';
 
 function Usuarios() {
+    // para el use useState manejamos un arreglo con la definicion de la variable y un elemento que nos permita editarla
     const [usuarios, setUsuarios] = useState([]);
     const [formData, setFormData] = useState({
         nombre: '',
@@ -11,8 +12,9 @@ function Usuarios() {
     const [editId, setEditId] = useState(null);
 
     // Obtener todos los usuarios
+    // useEffect modifica o realiza un segmento de codigo en base al monitorio que nosotros indequemos
     useEffect(() => {
-        fetch('http://172.17.0.1:5000/usuarios')
+        fetch('http://localhost:5000/usuarios')
             .then(response => response.json())
             .then(data => setUsuarios(data))
             .catch(error => console.error('Error al obtener los usuarios:', error));
