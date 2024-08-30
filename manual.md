@@ -215,7 +215,7 @@ docker run hello-world
 
 [Dockerhub]:https://hub.docker.com/
 
-2. Escribir un dockerfile
+2. Escribir un dockerfile en la raiz del proyecto que deseamos crear un contenedor
 
 ```Dockerfile
 # Imagen base
@@ -241,6 +241,40 @@ CMD ["node", "index.js"]
 
 ```
 
+4. Construir contenedor
+  * Opcion A - construirlos manualmente (uno a uno)
+  ```bash
+  docker build -t nombre_imagen:tag ruta_al_dockerfile
+  ```
+  * Opcion B - Usar docker-compose
+  ```yml
+  version: '3'  # Especifica la versión del formato de Docker Compose
+
+  services:
+    backend:  # Define el servicio llamado 'backend'
+      image: node:16  # Usa la imagen base de Node.js versión 16
+      build:
+        context: ./backend  # Especifica la ruta al Dockerfile para construir la imagen
+      ports:
+        - "3000:3000"  # Mapea el puerto 3000 del contenedor al puerto 3000 del host
+      environment:
+        - NODE_ENV=production  # Establece la variable de entorno NODE_ENV como 'production'
+      volumes:
+        - ./backend:/app  # Monta el directorio local './backend' en '/app' dentro del contenedor
+      depends_on:
+        - mongodb  # Define que el servicio 'backend' depende de que 'mongodb' esté corriendo
+
+    mongodb:  # Define el servicio llamado 'mongodb'
+      image: mongo:4.4  # Usa la imagen base de MongoDB versión 4.4
+      ports:
+        - "27017:27017"  # Mapea el puerto 27017 del contenedor al puerto 27017 del host
+      volumes:
+        - mongo_data:/data/db  # Monta el volumen 'mongo_data' en '/data/db' dentro del contenedor
+
+  volumes:
+    mongo_data:  # Define un volumen llamado 'mongo_data' para persistir los datos de MongoDB
+  ```
+
 3. Iniciar sesion en Dockerhub desde la terminal
 
 ```bash
@@ -261,3 +295,58 @@ docker push tu_usuario/nombre_imagen:tag
 5. Verificar la imagen en Dockerhub en la seccion de [repositorios] 
 
 [repositorios]:https://hub.docker.com/repositories
+
+## Usar imagenes de Dockerhub
+Usando docker-compose
+```yml
+version: '3'  # Especifica la versión del formato de Docker Compose
+
+services:
+  backend:  # Define el servicio llamado 'backend'
+    image: tu_usuario/mi_backend:v1  # Usa tu imagen personalizada 'mi_backend' con la etiqueta 'v1' desde DockerHub
+    ports:
+      - "3000:3000"  # Mapea el puerto 3000 del contenedor al puerto 3000 del host
+    environment:
+      - NODE_ENV=production  # Establece la variable de entorno NODE_ENV como 'production'
+    volumes:
+      - ./backend:/app  # Monta el directorio local './backend' en '/app' dentro del contenedor
+    depends_on:
+      - mongodb  # Define que el servicio 'backend' depende de que 'mongodb' esté corriendo
+
+  mongodb:  # Define el servicio llamado 'mongodb'
+    image: tu_usuario/mi_mongodb:latest  # Usa tu imagen personalizada 'mi_mongodb' con la etiqueta 'latest' desde DockerHub
+    ports:
+      - "27017:27017"  # Mapea el puerto 27017 del contenedor al puerto 27017 del host
+    volumes:
+      - mongo_data:/data/db  # Monta el volumen 'mongo_data' en '/dat
+
+```
+
+## Comandos Básicos para Docker Compose
+* Iniciar servicios:
+
+```bash
+docker compose up
+```
+* Construir servicios sin iniciar:
+
+```bash
+docker compose build
+```
+* Iniciar servicios en segundo plano:
+
+```bash
+docker compose up -d
+```
+
+* Parar servicios:
+
+```bash
+docker compose down
+```
+
+* Ver logs:
+
+```bash
+docker compose logs
+```
