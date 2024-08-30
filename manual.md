@@ -210,20 +210,54 @@ sudo usermod -aG docker $USER
 docker run hello-world
 ```
 
-### Subir imagen de Docker a Dockerhub
-1. Escribir un dockerfile
-2. Contruir la imagen Docker
+## Subir imagen de Docker a Dockerhub
+1. Crear una cuenta en [Dockerhub]
 
-```bash
-docker build -t nombre-usuario/nombre-imagen:tag
+[Dockerhub]:https://hub.docker.com/
+
+2. Escribir un dockerfile
+
+```Dockerfile
+# Imagen base
+FROM node:16
+
+# Directorio de trabajo
+WORKDIR /app
+
+# Copiar package.json y package-lock.json
+COPY package*.json ./
+
+# Instalar dependencias
+RUN npm install
+
+# Copiar el resto del código
+COPY . .
+
+# Exponer el puerto 3000
+EXPOSE 3000
+
+# Comando para iniciar la aplicación
+CMD ["node", "index.js"]
+
 ```
-3. Iniciar sesion en Dockerhub
+
+3. Iniciar sesion en Dockerhub desde la terminal
+
 ```bash
 docker login
 ```
-4. Subir la imagen a Dockerhub
+
+4. Contruir la imagen Docker
 
 ```bash
-docker push nombre-usuario/nombre-imagen:tag
+docker build -t tu_usuario/nombre_imagen:tag .
 ```
-5. Verificar la imagen en Dockerhub
+
+5. Subir la imagen a Dockerhub
+
+```bash
+docker push tu_usuario/nombre_imagen:tag
+```
+5. Verificar la imagen en Dockerhub en la seccion de [repositorios] 
+
+[repositorios]:https://hub.docker.com/repositories
