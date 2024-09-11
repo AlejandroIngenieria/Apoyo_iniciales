@@ -1,0 +1,24 @@
+/* Coreccion de vista de links en barra de navegacion */
+.links {
+    text-decoration: none;
+}
+
+/* Dar formato a todas las publicaciones en la pagina de inicio*/
+.publicaciones {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/* Aplicar formato de caja a cada publicacion en la pagina de inicio */
+.cards {
+    max-width: 200px;
+    min-height: 300px;
+
+}
+
+/* Aplicar formato a login */
+.login{
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+}
